@@ -1,6 +1,8 @@
 //SPDX-License-Identifier: GPL-3.0
 
-pragma solidity 0.8.4;
+pragma solidity 0.8.15;
+
+/// Interface
 
 interface ERC20Interface {
     function totalSupply() external view returns (uint);
@@ -15,8 +17,12 @@ interface ERC20Interface {
     event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
  
+
  
 contract zongToken is ERC20Interface{
+
+/// State Variables
+
     string public name = "ZongToken";
     string public symbol = "ZONG";
     uint public decimals = 0; //18 is very common
@@ -29,18 +35,15 @@ contract zongToken is ERC20Interface{
     mapping(address => mapping(address => uint)) allowed;
     // allowed[0x111][0x222] = 100;
     
-    
+/// Constructor
+
     constructor(){
         totalSupply = 1000000;
         founder = msg.sender;
         balances[founder] = totalSupply;
     }
-    
-    
-    function balanceOf(address tokenOwner) public view override returns (uint balance){
-        return balances[tokenOwner];
-    }
-    
+
+/// Public
     
     function transfer(address to, uint tokens) public override returns(bool success){
         require(balances[msg.sender] >= tokens);
@@ -51,12 +54,6 @@ contract zongToken is ERC20Interface{
         
         return true;
     }
-    
-    
-    function allowance(address tokenOwner, address spender) view public override returns(uint){
-        return allowed[tokenOwner][spender];
-    }
-    
     
     function approve(address spender, uint tokens) public override returns (bool success){
         require(balances[msg.sender] >= tokens);
@@ -80,5 +77,15 @@ contract zongToken is ERC20Interface{
          emit Transfer(from, to, tokens);
          
          return true;
-     }
+    }
+
+/// View
+
+    function balanceOf(address tokenOwner) public view override returns (uint balance){
+        return balances[tokenOwner];
+    }
+
+    function allowance(address tokenOwner, address spender) view public override returns(uint){
+        return allowed[tokenOwner][spender];
+    }
 }

@@ -1,10 +1,12 @@
 //SPDX-License-Identifier: GPL-3.0
 
-pragma solidity 0.8.4;
+pragma solidity 0.8.15;
 
 import "./zongToken.sol";
 
 contract zongICO is zongToken { 
+
+/// State Variables
 
     address public admin;
     address payable public deposit;
@@ -16,10 +18,23 @@ contract zongICO is zongToken {
     uint public tokenTradeStart = saleEnd + 604800;
     uint public maxInvestment = 5 ether;
     uint public minInvestment = 0.003 ether;
-    uint public totalInCirculation = 0;
+    uint public totalInCirculation;
 
     enum State{beforeStart, running, afterEnd, halted}
     State public icoState;
+
+/// Events
+
+    event Invest(address investor, uint value, uint tokens);
+
+/// Modifiers
+
+    modifier onlyAdmin(){
+        require(msg.sender == admin);
+        _;
+    }
+
+/// Constructor
 
     constructor(address payable _deposit){
         deposit = _deposit;
@@ -28,10 +43,13 @@ contract zongICO is zongToken {
 
     }
 
-    modifier onlyAdmin(){
-        require(msg.sender == admin);
-        _;
-    }
+/// Receive Fallback
+
+    receive() payable external{
+            invest();
+        }
+
+/// Public
 
     function halt() public onlyAdmin{
         icoState = State.halted;
@@ -41,9 +59,9 @@ contract zongICO is zongToken {
         icoState = State.running;
     }
 
-    // function changeDepositAddress(address payable newDeposit) public onlyAdmin{
-    //     deposit = newDeposit;
-    // }
+    function changeDepositAddress(address payable newDeposit) public onlyAdmin{
+        deposit = newDeposit;
+    }
 
     function getCurrentState() public view returns(State) {
         if(icoState == State.halted){
@@ -56,8 +74,6 @@ contract zongICO is zongToken {
             return State.afterEnd;
         }
     }
-
-    event Invest(address investor, uint value, uint tokens);
 
     function invest() payable public returns(bool){
         icoState = getCurrentState();
@@ -78,9 +94,4 @@ contract zongICO is zongToken {
         return true;        
     }
     
-    receive() payable external{
-            invest();
-        }
-
-
 }
