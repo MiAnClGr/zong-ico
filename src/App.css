@@ -1,38 +1,81 @@
-.App {
+main {
   text-align: center;
+  vertical-align: center;
+  line-height: 100vhl;
+  
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Logo {
+  width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  background: #d0b586;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Header{
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 66%;
+  height: 100px;
+  padding: 20px;
+  font-size: 12px
+}
+
+.Connect {
+  position: fixed;
+  right: 12px;
+  top: 12px;
+  background: #d0b586;
+  padding: 5px;
+  font-size: 16px;
+  height: 35px
+  
+} 
+
+.User {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  color: #5d2e0b;
+  padding: 0;
+  font-weight: bold;
+}
+
+.Buy {
+  color: #5d2e0b;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.BuyInput {
+  background-color: #d0b586;
+  color: #5d2e0b;
+  width: 300px;
+  height: 25px;
+  border: 2px solid #5d2e0b;
+  
+}
+.BuyButton {
+  background-color: #d0b586;
+  padding: 4px 5px;
+  border: 2px solid #5d2e0b;
+  font-size: 16px;
+  margin-left: 5px;
+  color: #5d2e0b;
+  
+ }
+
+.Instructions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  color: #5d2e0b;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #5d2e0b;
+  font-size: 16px
 }
